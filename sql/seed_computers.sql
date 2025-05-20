@@ -1,0 +1,1 @@
+-- SQL to insert 50 computers

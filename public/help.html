@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Help Center - Secure Lab System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f6f9fc;
+        }
+        .help-header {
+            background: #1084ff;
+            color: #fff;
+            padding: 2rem 0 1rem 0;
+            border-bottom: 4px solid #0d6efd;
+        }
+        .help-section {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .screenshot {
+            border: 1px solid #e3e3e3;
+            border-radius: 6px;
+            max-width: 100%;
+            margin: 1rem 0;
+        }
+        .note {
+            background: #e7f1ff;
+            border-left: 4px solid #1084ff;
+            padding: 10px 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        .tip {
+            background: #fffbe7;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="help-header text-center">
+        <h1>Help Center</h1>
+        <p class="lead">Find answers, guides, and support for the Secure Lab System</p>
+    </div>
+    <div class="container my-5">
+
+        <!-- Getting Started Section -->
+        <div class="help-section">
+            <h3>Getting Started</h3>
+            <h5>Creating Your Account</h5>
+            <ol>
+                <li>Visit the registration page by clicking <strong>Register</strong> on the login screen.</li>
+                <li>Fill out the registration form with your personal details.</li>
+                <li>Select your appropriate role (<strong>Student, Faculty, or Technician</strong>).</li>
+                <li>Create a strong password following the security requirements.</li>
+                <li>Complete the CAPTCHA verification.</li>
+                <li>Submit your registration and wait for admin approval.</li>
+            </ol>
+            <div class="note">
+                <strong>Note:</strong> Your account must be approved by an administrator before you can log in. This usually takes 1-2 business days.
+            </div>
+        </div>
+
+        <!-- Navigating the Dashboard Section -->
+        <div class="help-section">
+            <h3>Navigating the Dashboard</h3>
+            <ol>
+                <li>After logging in, you'll be directed to your <strong>role-specific dashboard</strong>.</li>
+                <li>The top section shows overview statistics relevant to your role.</li>
+                <li>The <strong>Quick Actions</strong> section provides shortcuts to common tasks.</li>
+                <li>Recent bookings or activities are displayed at the bottom.</li>
+                <li>Use the navigation bar at the top to access other sections.</li>
+            </ol>
+            <div class="tip">
+                <strong>Tip:</strong> The dashboard is personalized based on your role, showing only the information and actions relevant to you.
+            </div>
+        </div>
+
+        <!-- FAQs Section -->
+        <div class="help-section">
+            <h3>FAQs</h3>
+            <div class="accordion" id="helpFaqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="helpFaq1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#helpFaqCollapse1" aria-expanded="false" aria-controls="helpFaqCollapse1">
+                            Why can't I book a computer at a certain time?
+                        </button>
+                    </h2>
+                    <div id="helpFaqCollapse1" class="accordion-collapse collapse" aria-labelledby="helpFaq1" data-bs-parent="#helpFaqAccordion">
+                        <div class="accordion-body">
+                            The computer may already be booked or under maintenance. Try a different time or computer.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="helpFaq2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#helpFaqCollapse2" aria-expanded="false" aria-controls="helpFaqCollapse2">
+                            How do I give feedback or report an issue?
+                        </button>
+                    </h2>
+                    <div id="helpFaqCollapse2" class="accordion-collapse collapse" aria-labelledby="helpFaq2" data-bs-parent="#helpFaqAccordion">
+                        <div class="accordion-body">
+                            Use the <strong>Feedback</strong> section on your dashboard to send us your comments or report problems.
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more FAQ items as needed -->
+            </div>
+        </div>
+
+        <!-- Contact Support Section -->
+        <div class="help-section">
+            <h3>Contact Support</h3>
+            <ul>
+                <li>Email: <a href="mailto:support@yourdomain.com">support@yourdomain.com</a></li>
+                <li>Phone: +123-456-7890</li>
+                <li>Visit: Room 101, IT Building, Your University</li>
+            </ul>
+        </div>
+    </div>
+    <div class="text-center mb-4">
+        <a href="dashboard_user.php" class="btn btn-primary">&larr; Back to Dashboard</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

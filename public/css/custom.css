@@ -1,0 +1,227 @@
+/* Custom styles for Secure Lab Dashboard */
+
+/* Variables for consistent color palette */
+:root {
+  --primary-color: #0d6efd;
+  --primary-dark: #0b5ed7;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #0dcaf0;
+  --light-color: #f8f9fa;
+  --dark-color: #292126;
+  --sidebar-width: 250px;
+  --header-height: 56px;
+  --sidebar-blue: #1084ff; /* vivid blue from your image */
+}
+
+/* General Layout Styling */
+body {
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Content container to adjust for sidebar */
+.content-container {
+  margin-left: var(--sidebar-width);
+  padding-top: calc(var(--header-height) + 20px);
+  padding-right: 20px;
+  padding-left: 20px;
+  min-height: calc(100vh - var(--header-height));
+  transition: margin-left 0.3s;
+}
+
+/* Responsive adjustment for mobile */
+@media (max-width: 992px) {
+  .content-container {
+      margin-left: 0;
+  }
+  .sidebar-nav {
+      transform: translateX(-100%);
+  }
+  .sidebar-nav.show {
+      transform: translateX(0);
+  }
+}
+
+/* Sidebar Styling */
+.sidebar-nav {
+  width: var(--sidebar-width);
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  height: calc(100vh - var(--header-height));
+  z-index: 100;
+  overflow-y: auto;
+  transition: transform 0.3s;
+  background: var(--sidebar-blue);   /* vivid blue background */
+  border: 2px solid red;             /* red border all around */
+  margin: 0;
+  padding: 0;
+  background-clip: padding-box;
+  box-shadow: none;
+}
+
+/* Fix for black scrollbar in Webkit browsers (Chrome, Edge, Safari) */
+.sidebar-nav::-webkit-scrollbar {
+  width: 10px;
+  background: var(--sidebar-blue);
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: #0b5ed7;
+  border-radius: 6px;
+}
+.sidebar-nav::-webkit-scrollbar-corner {
+  background: var(--sidebar-blue);
+}
+
+/* Fix for Firefox scrollbar */
+.sidebar-nav {
+  /* Removed 'scrollbar-color' for unsupported browsers */
+  /* Removed 'scrollbar-width' for unsupported browsers */
+  /* Fallback for Webkit-based browsers */
+  &::-webkit-scrollbar {
+    width: 10px;
+    background: var(--sidebar-blue);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #0b5ed7;
+    border-radius: 6px;
+  }
+  /* Removed 'scrollbar-width' for unsupported browsers */
+}
+
+/* Sidebar header */
+.sidebar-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar links */
+.sidebar-link {
+  color: rgba(255, 255, 255, 0.8);
+  padding: 12px 15px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left-color: var(--primary-color);
+}
+
+.sidebar-link i {
+  width: 24px;
+  text-align: center;
+  margin-right: 8px;
+}
+
+/* Dashboard cards styling */
+.stat-card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.5rem;
+}
+
+/* Card category colors */
+.card-available {
+  border-left: 4px solid var(--success-color);
+}
+
+.card-booked {
+  border-left: 4px solid var(--primary-color);
+}
+
+.card-maintenance {
+  border-left: 4px solid var(--warning-color);
+}
+
+.card-unavailable {
+  border-left: 4px solid var(--danger-color);
+}
+
+/* Status indicators */
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-available {
+  background-color: var(--success-color);
+}
+
+.status-booked {
+  background-color: var(--primary-color);
+}
+
+.status-maintenance {
+  background-color: var(--warning-color);
+}
+
+.status-unavailable {
+  background-color: var(--danger-color);
+}
+
+/* Booking system styling */
+.booking-card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.booking-card .card-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px;
+  font-weight: 500;
+}
+
+/* History section styling */
+.history-item {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.history-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Welcome section */
+.welcome-section {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.stat-box {
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+.stat-box:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+}

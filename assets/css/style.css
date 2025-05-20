@@ -1,0 +1,48 @@
+
+/* style.css - Custom Enhancements for Secure Lab System */
+
+/* General Page Styling */
+body {
+  padding-top: 70px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+/* Cards */
+.card {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.25);
+}
+
+/* Forms */
+.form-label {
+  font-weight: 500;
+}
+
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  border-color: #80bdff;
+}
+
+/* Tables */
+.table thead th {
+  background-color: #e9ecef;
+}
+
+/* Badges */
+.badge {
+  font-size: 0.95em;
+  padding: 0.5em 0.75em;
+  border-radius: 6px;
+}

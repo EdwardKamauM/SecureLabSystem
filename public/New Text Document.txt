@@ -1,0 +1,182 @@
+<?php
+require_once "../includes/auth.php";
+require_once "../config/db.php";
+
+// Only admin or technician allowed
+if (!in_array($_SESSION['role'], ['admin', 'technician'])) {
+    header("Location: dashboard_user.php");
+    exit();
+}
+
+// Fetch all bookings
+$stmt = $pdo->query("
+  SELECT b.*, u.name AS user_name, c.label AS computer_label 
+  FROM bookings b
+  JOIN users u ON b.user_id = u.id
+  JOIN computers c ON b.computer_id = c.id
+  ORDER BY b.start_time DESC
+");
+$bookings = $stmt->fetchAll();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Bookings - Secure Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+  <?php include_once "../includes/navbar.php"; ?>
+
+  <div class="container my-5">
+    <h2 class="mb-4"><i class="fas fa-calendar-check me-2"></i>Manage Bookings</h2>
+
+    <?php if (count($bookings)): ?>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+          <thead class="table-primary">
+            <tr>
+              <th>#</th>
+              <th>User</th>
+              <th>Computer</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($bookings as $index => $b): ?>
+              <tr>
+                <td><?= $index + 1 ?></td>
+                <td><?= htmlspecialchars($b['user_name']) ?></td>
+                <td><?= htmlspecialchars($b['computer_label']) ?></td>
+                <td><?= date("M d, Y H:i", strtotime($b['start_time'])) ?></td>
+                <td><?= date("M d, Y H:i", strtotime($b['end_time'])) ?></td>
+                <td>
+                  <?php if ($b['status'] === 'approved'): ?>
+                    <span class="badge bg-success">Approved</span>
+                  <?php elseif ($b['status'] === 'rejected'): ?>
+                    <span class="badge bg-danger">Rejected</span>
+                  <?php else: ?>
+                    <span class="badge bg-warning text-dark">Pending</span>
+                  <?php endif; ?>
+                </td>
+                <td>
+                  <?php if ($b['status'] === 'pending'): ?>
+                    <a href="approve_booking.php?id=<?= $b['id'] ?>" class="btn btn-sm btn-success me-1">
+                      <i class="fas fa-check"></i> Approve
+                    </a>
+                    <a href="reject_booking.php?id=<?= $b['id'] ?>" class="btn btn-sm btn-danger">
+                      <i class="fas fa-times"></i> Reject
+                    </a>
+                  <?php else: ?>
+                    <span class="text-muted">No action</span>
+                  <?php endif; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+      <?php
+// Current code likely looks something like this:
+require_once '../includes/functions.php';
+require_once '../config/db.php';
+
+if (!isAdmin()) {
+    redirect('dashboard_user.php');
+}
+
+if (isset($_GET['id'])) {
+    $booking_id = $_GET['id'];
+    
+    // MODIFY: Add justification field handling
+    $justification = '';
+    if (isset($_POST['justification'])) {
+        $justification = mysqli_real_escape_string($conn, $_POST['justification']);
+    }
+    
+    // MODIFY: Update the query to include justification
+    if (!empty($justification)) {
+        $query = "UPDATE bookings SET status = 'rejected', rejection_reason = '$justification', 
+                 updated_at = NOW() WHERE id = '$booking_id'";
+    } else {
+        // For backward compatibility - allow rejections without justification
+        $query = "UPDATE bookings SET status = 'rejected', updated_at = NOW() 
+                 WHERE id = '$booking_id'";
+    }
+    
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        setFlashMessage('success', 'Booking rejected successfully.');
+    } else {
+        setFlashMessage('error', 'Error rejecting booking: ' . mysqli_error($conn));
+    }
+}
+
+redirect('manage_bookings.php');
+?>
+    <?php else: ?>
+      <div class="alert alert-info">No bookings found.</div>
+    <?php endif; ?>
+  </div>
+
+  <?php include_once "../includes/footer.php"; ?>
+  php<!-- When showing the reject button/link -->
+<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal<?php echo $booking['id']; ?>">
+    Reject
+</a>
+
+<!-- Add modal for rejection justification -->
+<div class="modal fade" id="rejectModal<?php echo $booking['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reject Booking</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="reject_booking.php?id=<?php echo $booking['id']; ?>" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="justification">Rejection Justification:</label>
+                        <textarea class="form-control" id="justification" name="justification" 
+                                  rows="3" required></textarea>
+                        <small class="form-text text-muted">
+                            Please provide a reason for rejecting this booking. This will be visible to the user.
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Reject Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- When displaying rejected bookings, show the justification -->
+<?php if ($booking['status'] == 'rejected' && !empty($booking['rejection_reason'])): ?>
+    <div class="rejection-reason">
+        <strong>Rejection Reason:</strong> <?php echo htmlspecialchars($booking['rejection_reason']); ?>
+    </div>
+<?php endif; ?>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/scripts.js"></script>
+</body>
+</html>
